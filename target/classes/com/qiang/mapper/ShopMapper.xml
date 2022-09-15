@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qiang.mapper.ShopMapper">
+  <resultMap id="BaseResultMap" type="com.qiang.pojo.Shop">
+    <result column="shop_id" jdbcType="INTEGER" property="shopId" />
+    <result column="shop_name" jdbcType="VARCHAR" property="shopName" />
+    <result column="shop_introduce" jdbcType="VARCHAR" property="shopIntroduce" />
+    <result column="shop_price" jdbcType="DOUBLE" property="shopPrice" />
+    <result column="shop_image" jdbcType="VARCHAR" property="shopImage" />
+    <result column="shop_count" jdbcType="INTEGER" property="shopCount" />
+    <result column="shop_date" jdbcType="VARCHAR" property="shopDate" />
+    <result column="shop_typeId" jdbcType="INTEGER" property="shopTypeid" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    shop_id, shop_name, shop_introduce, shop_price, shop_image, shop_count, shop_date, 
+    shop_typeId
+  </sql>
+  <select id="selectByExample" parameterType="com.qiang.pojo.ShopExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from shop
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.qiang.pojo.ShopExample">
+    delete from shop
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qiang.pojo.Shop">
+    insert into shop (shop_id, shop_name, shop_introduce, 
+      shop_price, shop_image, shop_count, 
+      shop_date, shop_typeId)
+    values (#{shopId,jdbcType=INTEGER}, #{shopName,jdbcType=VARCHAR}, #{shopIntroduce,jdbcType=VARCHAR}, 
+      #{shopPrice,jdbcType=DOUBLE}, #{shopImage,jdbcType=VARCHAR}, #{shopCount,jdbcType=INTEGER}, 
+      #{shopDate,jdbcType=VARCHAR}, #{shopTypeid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qiang.pojo.Shop">
+    insert into shop
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="shopName != null">
+        shop_name,
+      </if>
+      <if test="shopIntroduce != null">
+        shop_introduce,
+      </if>
+      <if test="shopPrice != null">
+        shop_price,
+      </if>
+      <if test="shopImage != null">
+        shop_image,
+      </if>
+      <if test="shopCount != null">
+        shop_count,
+      </if>
+      <if test="shopDate != null">
+        shop_date,
+      </if>
+      <if test="shopTypeid != null">
+        shop_typeId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shopId != null">
+        #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="shopName != null">
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopIntroduce != null">
+        #{shopIntroduce,jdbcType=VARCHAR},
+      </if>
+      <if test="shopPrice != null">
+        #{shopPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="shopImage != null">
+        #{shopImage,jdbcType=VARCHAR},
+      </if>
+      <if test="shopCount != null">
+        #{shopCount,jdbcType=INTEGER},
+      </if>
+      <if test="shopDate != null">
+        #{shopDate,jdbcType=VARCHAR},
+      </if>
+      <if test="shopTypeid != null">
+        #{shopTypeid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qiang.pojo.ShopExample" resultType="java.lang.Integer">
+    select count(*) from shop
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update shop
+    <set>
+      <if test="record.shopId != null">
+        shop_id = #{record.shopId,jdbcType=INTEGER},
+      </if>
+      <if test="record.shopName != null">
+        shop_name = #{record.shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopIntroduce != null">
+        shop_introduce = #{record.shopIntroduce,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopPrice != null">
+        shop_price = #{record.shopPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.shopImage != null">
+        shop_image = #{record.shopImage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopCount != null">
+        shop_count = #{record.shopCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.shopDate != null">
+        shop_date = #{record.shopDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopTypeid != null">
+        shop_typeId = #{record.shopTypeid,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update shop
+    set shop_id = #{record.shopId,jdbcType=INTEGER},
+      shop_name = #{record.shopName,jdbcType=VARCHAR},
+      shop_introduce = #{record.shopIntroduce,jdbcType=VARCHAR},
+      shop_price = #{record.shopPrice,jdbcType=DOUBLE},
+      shop_image = #{record.shopImage,jdbcType=VARCHAR},
+      shop_count = #{record.shopCount,jdbcType=INTEGER},
+      shop_date = #{record.shopDate,jdbcType=VARCHAR},
+      shop_typeId = #{record.shopTypeid,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+
+</mapper>
